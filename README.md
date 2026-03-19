@@ -413,10 +413,4 @@ treePL
 topGO
 ```
 
----
 
-# Contact
-
-Pipeline developed for comparative genomic analysis of **pawpaw (*Asimina triloba*) gene family evolution**.
-
-For questions or collaboration inquiries, please open an issue in this repository.
