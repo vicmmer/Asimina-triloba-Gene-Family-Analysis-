@@ -1,7 +1,7 @@
 # Gene Family Evolution Pipeline  
 ### Pawpaw-Focused Comparative Genomics
 
-This repository contains scripts used to analyze **gene family evolution across *Annonaceae* and related magnoliid taxa**, with a primary focus on identifying **gene family expansions and contractions associated with pawpaw (*Asimina triloba*)**.
+This repository contains scripts used to analyze **gene family evolution across *Annonaceae* and related magnoliid taxa**, with a primary focus on identifying **gene family expansions and contractions associated with pawpaw (*Asimina triloba*) and the Annonanceae family as a whole**.
 
 The pipeline integrates genome quality assessment, orthogroup inference, functional annotation, gene family evolution modeling, phylogenetic dating, and GO enrichment analyses to functionally interpret **pawpaw-specific gene family expansions and candidate metabolic pathways**.
 
