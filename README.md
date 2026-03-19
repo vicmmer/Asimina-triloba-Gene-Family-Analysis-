@@ -1,7 +1,7 @@
 # Gene Family Evolution Pipeline  
 ### Pawpaw-Focused Comparative Genomics
 
-This repository contains scripts used to analyze **gene family evolution across Annonaceae and related magnoliid taxa**, with a primary focus on identifying **gene family expansions and contractions associated with pawpaw (*Asimina triloba*) and the Annonaceae family as a whole**.
+This repository contains scripts used to analyze **gene family evolution across Annonaceae and related magnoliid taxa**, with a primary focus on identifying **gene family expansions and contractions associated with common pawpaw (*Asimina triloba*) and the Annonaceae family as a whole**.
 
 The pipeline integrates genome quality assessment, orthogroup inference, functional annotation, gene family evolution modeling, phylogenetic dating, and GO enrichment analyses to functionally interpret **pawpaw-specific gene family expansions and candidate metabolic pathways**.
 
@@ -79,11 +79,9 @@ scripts/0.download_accessions.sh
 |------|----------|------------|------|
 | *Annona cherimola* | `Annona_cherimola.fa` | CNCB / UMA proteins | 2023 |
 | *Annona montana* | `Annona_montana.fa` | CNCB–GWH | 2023 |
-| *Annona muricata* | `Annona_muricata_annotated.fasta` | DOI:10.1111/1755-0998.13353 | 2021 |
 | *Cinnamomum micranthum* | `Cinnamomum_micranthum.fa` | NCBI Datasets | 2019 |
 | *Lindera megaphylla* | `Lindera_megaphylla.fa` | CNCB–GWH | 2023 |
 | *Magnolia kwangsiensis* | `Magnolia_kwangsiensis.fa` | CNCB–GWH | 2025 |
-| *Persea americana* | `Persea_americana.fa` | CoGe / Science Data Bank | 2025 |
 
 The pipeline can easily be modified to include **additional species or alternative taxa** by editing:
 
