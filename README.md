@@ -38,15 +38,122 @@ This installs:
 
 # Running the Pipeline
 
-Run the full workflow using the automated pipeline script:
+## Pipeline Scope and Subsetting Behavior
 
-```bash
-./scripts/automate.sh
+This pipeline is designed to analyze gene family evolution across a set of **magnoliid genomes with a focus on *Asimina triloba***.
+
+### Species included in the analysis
+
+The following species are downloaded and analyzed during the initial stages of the pipeline:
+
+| Species | Role |
+|-------|------|
+| *Asimina triloba* | Focal species |
+| *Annona cherimola* | Annonaceae |
+| *Annona montana* | Annonaceae |
+| *Annona muricata* | Annonaceae |
+| *Magnolia kwangsiensis* | Outgroup (Magnoliales) |
+| *Lindera megaphylla* | Outgroup (Laurales) |
+| *Cinnamomum micranthum* | Outgroup (Laurales) |
+| *Persea americana* | Outgroup (Laurales) |
+
+These species are defined in:
+
+```
+scripts/0.download_accessions.sh
 ```
 
-The automate script prints **step-by-step messages explaining each stage of the analysis**.
+If you wish to add or remove taxa, modify the accession list in this script.
 
 ---
+
+### Pipeline stages
+
+The pipeline runs in two phases:
+
+#### Phase 1 — Full dataset
+The following steps are run using **all species and all orthogroups**:
+
+```
+0.download_accessions.sh
+1a.busco.sh
+1b.busco_summaries.sh
+2a.orthofinder.sh
+```
+
+At this stage, **OrthoFinder identifies all orthogroups across all species**.
+
+---
+
+#### Phase 2 — Subset mode (for debugging and testing)
+
+For troubleshooting and rapid testing, the pipeline currently **subsets 50 orthogroups** after OrthoFinder before running the remainder of the workflow.
+
+This affects the following steps:
+
+```
+2b.prepare_interproscan_input.sh
+3a.interproscan.sh
+3b.filter_interpro_output.sh
+4a.UpsetPrepCafe.R
+5.cafe.sh
+6.treePL
+7.topGO
+```
+
+Running the full dataset through InterProScan, CAFE, and topGO can be computationally expensive, so this subset mode allows the pipeline to be tested quickly.
+
+---
+
+### Changing the subset size
+
+The subset size is controlled in the script:
+
+```
+scripts/2b.prepare_interproscan_input.sh
+```
+
+You will see a line similar to:
+
+```bash
+SUBSET=50
+```
+
+To run the **full pipeline on all orthogroups**, change this to:
+
+```bash
+SUBSET=ALL
+```
+
+or comment out the subsetting logic entirely.
+
+Example:
+
+```bash
+SUBSET=ALL
+```
+
+This will allow the remainder of the pipeline to run on **all orthogroups detected by OrthoFinder**.
+
+---
+
+### Recommended usage
+
+For development or troubleshooting:
+
+```
+SUBSET=50
+```
+
+For full biological analysis:
+
+```
+SUBSET=ALL
+```
+
+---
+
+This design allows the pipeline to be **quickly tested during development while remaining scalable to full comparative genomic analyses**.
 
 # Repository Structure
 
