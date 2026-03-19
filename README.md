@@ -378,11 +378,7 @@ candidate_acetogenin_topgo_terms.tsv
 ---
 
 # Important Notes
-
-- InterProScan must be run on **cleaned orthogroup FASTA files** produced by OrthoFinder  
-- `filter_interpro_output.sh` must be executed before CAFE preparation  
 - Transposable element annotations are removed to avoid false signals in gene family expansion analyses
-
 ---
 
 # Software Versions
