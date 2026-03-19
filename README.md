@@ -51,9 +51,8 @@ The automate script prints **step-by-step messages explaining each stage of the 
 # Repository Structure
 
 ```
-gene_family_pipeline/
 
-scripts/
+scripts included: 
   automate.sh
   0.download_accessions.sh
   1a.busco.sh
@@ -70,15 +69,6 @@ scripts/
   7a.topgoprep.sh
   7b.topgo.R
 
-data/
-  include_orthogroups.txt
-
-figures/
-  upset_plot.pdf
-  SpeciesTree_treepl_dated_TEST.pdf
-
-environment.yml
-README.md
 ```
 
 ---
