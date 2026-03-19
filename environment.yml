@@ -1,0 +1,22 @@
+name: gene_family_pipeline
+
+channels:
+  - bioconda
+  - conda-forge
+
+dependencies:
+  - orthofinder
+  - interproscan
+  - cafe5
+  - treepl
+
+  - r-base
+  - r-topgo
+  - r-rgraphviz
+  - r-ape
+  - r-phytools
+  - r-dplyr
+  - r-tidyr
+  - r-readr
+  - r-stringr
+  - r-upsetr
