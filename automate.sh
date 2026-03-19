@@ -48,8 +48,7 @@ echo
 
 # 5) Gene family evolution modeling
 echo "Step 5: CAFE"
-#./5a.cafe.sh
-./cafe2.sh # i think this is the one that worked? 
+./5a.cafe.sh
 echo
 
 # 6) Phylogenetic dating
