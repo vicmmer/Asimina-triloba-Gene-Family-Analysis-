@@ -14,7 +14,6 @@ The workflow integrates the following tools:
 - **treePL** — divergence time estimation  
 - **topGO** — Gene Ontology enrichment analysis  
 
-
 ---
 
 # Installation
@@ -36,43 +35,73 @@ This installs:
 
 ---
 
-# Running the Pipeline
+# Dataset Scope
 
-## Pipeline Scope and Subsetting Behavior
+This pipeline analyzes **gene family evolution across Annonaceae and related magnoliid taxa**, with a focus on identifying gene family expansions associated with **pawpaw (*Asimina triloba*) and the Annonaceae lineage**.
 
-This pipeline is designed to analyze gene family evolution across a set of **magnoliid genomes with a focus on *Asimina triloba***.
+---
 
-### Species included in the analysis
+## Species used in the full research dataset
 
-The following species are downloaded and analyzed during the initial stages of the pipeline:
+In our full comparative genomic analyses, the following proteomes were included:
 
-| Species | Role |
-|-------|------|
-| *Asimina triloba* | Focal species |
-| *Annona cherimola* | Annonaceae |
-| *Annona montana* | Annonaceae |
-| *Annona muricata* | Annonaceae |
-| *Magnolia kwangsiensis* | Outgroup (Magnoliales) |
-| *Lindera megaphylla* | Outgroup (Laurales) |
-| *Cinnamomum micranthum* | Outgroup (Laurales) |
-| *Persea americana* | Outgroup (Laurales) |
+```
+Annona_cherimola.fa
+Annona_montana.fa
+Annona_muricata.fa
+Asimina_triloba.fa
+Cinnamomum_micranthum.fa
+Lindera_megaphylla.fa
+Magnolia_kwangsiensis.fa
+Persea_americana.fa
+```
 
-These species are defined in:
+These taxa represent:
+
+- **Annonaceae focal species**
+- **Magnoliid outgroups**
+
+used to contextualize gene family evolution within the order **Magnoliales and related lineages**.
+
+---
+
+## Public dataset used for troubleshooting
+
+For the **public GitHub pipeline and troubleshooting runs**, only genomes that are **publicly available for automated download** are included.
+
+These species are downloaded automatically by:
 
 ```
 scripts/0.download_accessions.sh
 ```
 
-If you wish to add or remove taxa, modify the accession list in this script.
+| Species | File Name | Source | Year |
+|------|----------|------------|------|
+| *Annona cherimola* | `Annona_cherimola.fa` | CNCB / UMA proteins | 2023 |
+| *Annona montana* | `Annona_montana.fa` | CNCB–GWH | 2023 |
+| *Annona muricata* | `Annona_muricata_annotated.fasta` | DOI:10.1111/1755-0998.13353 | 2021 |
+| *Cinnamomum micranthum* | `Cinnamomum_micranthum.fa` | NCBI Datasets | 2019 |
+| *Lindera megaphylla* | `Lindera_megaphylla.fa` | CNCB–GWH | 2023 |
+| *Magnolia kwangsiensis* | `Magnolia_kwangsiensis.fa` | CNCB–GWH | 2025 |
+| *Persea americana* | `Persea_americana.fa` | CoGe / Science Data Bank | 2025 |
+
+The pipeline can easily be modified to include **additional species or alternative taxa** by editing:
+
+```
+scripts/0.download_accessions.sh
+```
 
 ---
 
-### Pipeline stages
+# Pipeline Execution Strategy
 
-The pipeline runs in two phases:
+The pipeline runs in **two stages**.
 
-#### Phase 1 — Full dataset
-The following steps are run using **all species and all orthogroups**:
+---
+
+## Stage 1 — Full dataset processing
+
+The following steps operate on **all species and all orthogroups**:
 
 ```
 0.download_accessions.sh
@@ -81,117 +110,101 @@ The following steps are run using **all species and all orthogroups**:
 2a.orthofinder.sh
 ```
 
-At this stage, **OrthoFinder identifies all orthogroups across all species**.
+At this stage, **OrthoFinder identifies orthogroups across all included species**.
 
 ---
 
-#### Phase 2 — Subset mode (for debugging and testing)
+## Stage 2 — Subset mode for troubleshooting
 
-For troubleshooting and rapid testing, the pipeline currently **subsets 50 orthogroups** after OrthoFinder before running the remainder of the workflow.
+For development and troubleshooting purposes, the pipeline currently **subsets 50 orthogroups** after OrthoFinder before running the remainder of the workflow.
 
-This affects the following steps:
+This reduces runtime for computationally intensive steps such as:
+
+- InterProScan
+- CAFE5
+- GO enrichment analyses
+
+The following steps operate on the subset:
 
 ```
 2b.prepare_interproscan_input.sh
 3a.interproscan.sh
 3b.filter_interpro_output.sh
 4a.UpsetPrepCafe.R
-5.cafe.sh
-6.treePL
-7.topGO
+cafe2.sh
+6a.makeultrametric.R
+6b.config.cfg
+6c.plottree.R
+7a.topgoprep.sh
+7b.topgo.R
 ```
-
-Running the full dataset through InterProScan, CAFE, and topGO can be computationally expensive, so this subset mode allows the pipeline to be tested quickly.
 
 ---
 
-### Changing the subset size
+## Changing the subset size
 
-The subset size is controlled in the script:
+The orthogroup subset size is controlled in:
 
 ```
 scripts/2b.prepare_interproscan_input.sh
 ```
 
-You will see a line similar to:
+You will see a parameter such as:
 
 ```bash
 SUBSET=50
 ```
 
-To run the **full pipeline on all orthogroups**, change this to:
+To run the full pipeline on **all orthogroups**, change this to:
 
 ```bash
 SUBSET=ALL
 ```
 
-or comment out the subsetting logic entirely.
+Recommended usage:
 
-Example:
+| Mode | Setting |
+|-----|------|
+| Development / troubleshooting | `SUBSET=50` |
+| Full biological analysis | `SUBSET=ALL` |
+
+This design allows the pipeline to be **rapidly tested during development while remaining scalable to full comparative genomic analyses**.
+
+---
+
+# Running the Pipeline
+
+Once the environment is installed, the full pipeline can be executed with:
 
 ```bash
-SUBSET=ALL
+./scripts/automate.sh
 ```
 
-This will allow the remainder of the pipeline to run on **all orthogroups detected by OrthoFinder**.
+The automate script prints **step-by-step progress messages explaining each stage of the analysis**.
 
 ---
-
-### Recommended usage
-
-For development or troubleshooting:
-
-```
-SUBSET=50
-```
-
-For full biological analysis:
-
-```
-SUBSET=ALL
-```
-
----
-
-This design allows the pipeline to be **quickly tested during development while remaining scalable to full comparative genomic analyses**.
 
 # Repository Structure
 
 ```
+scripts included:
 
-scripts included: 
-  automate.sh
-  0.download_accessions.sh
-  1a.busco.sh
-  1b.busco_summaries.sh
-  2a.orthofinder.sh
-  2b.prepare_interproscan_input.sh
-  3a.interproscan.sh
-  3b.filter_interpro_output.sh
-  4a.UpsetPrepCafe.R
-  cafe2.sh
-  6a.makeultrametric.R
-  6b.config.cfg
-  6c.plottree.R
-  7a.topgoprep.sh
-  7b.topgo.R
-
+automate.sh
+0.download_accessions.sh
+1a.busco.sh
+1b.busco_summaries.sh
+2a.orthofinder.sh
+2b.prepare_interproscan_input.sh
+3a.interproscan.sh
+3b.filter_interpro_output.sh
+4a.UpsetPrepCafe.R
+cafe2.sh
+6a.makeultrametric.R
+6b.config.cfg
+6c.plottree.R
+7a.topgoprep.sh
+7b.topgo.R
 ```
-
----
-
-# Species and Data Sources
-
-| Species | File Name | Source | Year |
-|------|----------|------------|------|
-| *Annona cherimola* | `Annona_cherimola.fa` | CNCB / UMA proteins | 2023 |
-| *Annona montana* | `Annona_montana.fa` | CNCB–GWH | 2023 |
-| *Annona muricata* | `Annona_muricata_annotated.fasta` | DOI:10.1111/1755-0998.13353 | 2021 |
-| *Asimina triloba* | `Asimina_triloba_annotated.fasta` | Local assembly | 2023 |
-| *Cinnamomum micranthum* | `Cinnamomum_micranthum.fa` | NCBI Datasets | 2019 |
-| *Lindera megaphylla* | `Lindera_megaphylla.fa` | CNCB–GWH | 2023 |
-| *Magnolia kwangsiensis* | `Magnolia_kwangsiensis.fa` | CNCB–GWH | 2025 |
-| *Persea americana* | `Persea_americana.fa` | CoGe / Science Data Bank | 2025 |
 
 ---
 
@@ -202,8 +215,6 @@ Scripts are numbered in the recommended execution order.
 ---
 
 ## 0. Data Preparation
-
-Script:
 
 ```
 0.download_accessions.sh
@@ -220,8 +231,6 @@ protein_sequences/*.fa
 ---
 
 ## 1. Genome Completeness
-
-Scripts:
 
 ```
 1a.busco.sh
@@ -241,16 +250,12 @@ busco_summary_table.tsv
 
 ## 2. Orthogroup Inference
 
-Scripts:
-
 ```
 2a.orthofinder.sh
 2b.prepare_interproscan_input.sh
 ```
 
 OrthoFinder clusters proteins into **gene families (orthogroups)** across all species.
-
-The preparation script cleans orthogroup FASTA files for functional annotation.
 
 Output:
 
@@ -264,8 +269,6 @@ interproscan_input/
 ---
 
 ## 3. Functional Annotation
-
-Scripts:
 
 ```
 3a.interproscan.sh
@@ -290,8 +293,6 @@ all_go_unique.tsv
 
 ## 4. Gene Family Overlap Visualization and CAFE Preparation
 
-Script:
-
 ```
 4a.UpsetPrepCafe.R
 ```
@@ -314,8 +315,6 @@ SpeciesTree_ultrametric.txt
 
 ## 5. Gene Family Evolution Modeling
 
-Script:
-
 ```
 cafe2.sh
 ```
@@ -330,13 +329,9 @@ Gamma_family_results.txt
 Gamma_report.cafe
 ```
 
-These results identify **gene families significantly expanded in pawpaw and related taxa**.
-
 ---
 
 ## 6. Phylogenetic Dating
-
-Scripts:
 
 ```
 6a.makeultrametric.R
@@ -357,8 +352,6 @@ SpeciesTree_treepl_dated_TEST.pdf
 
 ## 7. GO Enrichment Analysis
 
-Scripts:
-
 ```
 7a.topgoprep.sh
 7b.topgo.R
@@ -375,8 +368,6 @@ candidate_acetogenin_summary.tsv
 candidate_acetogenin_topgo_terms.tsv
 ```
 
-These results help identify **candidate pathways related to specialized metabolism (e.g., acetogenins)**.
-
 ---
 
 # Figures Generated by the Pipeline
@@ -390,15 +381,13 @@ These results help identify **candidate pathways related to specialized metaboli
 
 # Important Notes
 
-- InterProScan must be run on **cleaned orthogroup FASTA files** produced by OrthoFinder.  
-- `filter_interpro_output.sh` must be executed before CAFE preparation.  
-- Transposable-element annotations are removed to avoid false signals in gene family expansion analyses.
+- InterProScan must be run on **cleaned orthogroup FASTA files** produced by OrthoFinder  
+- `filter_interpro_output.sh` must be executed before CAFE preparation  
+- Transposable element annotations are removed to avoid false signals in gene family expansion analyses
 
 ---
 
 # Software Versions
-
-Recommended versions:
 
 ```
 OrthoFinder ≥ 2.5
@@ -413,20 +402,20 @@ R ≥ 4.3
 # Pipeline Summary
 
 ```
-Protein sequences
-      ↓
+Proteomes
+   ↓
 BUSCO
-      ↓
+   ↓
 OrthoFinder
-      ↓
+   ↓
 InterProScan
-      ↓
+   ↓
 GO filtering
-      ↓
+   ↓
 CAFE5
-      ↓
+   ↓
 treePL
-      ↓
+   ↓
 topGO
 ```
 
