@@ -1,0 +1,13 @@
+name: gene_family_core
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - python=3.10
+  - orthofinder
+  - treepl
+  - blast
+  - mafft
+  - fasttree
