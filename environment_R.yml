@@ -1,0 +1,17 @@
+name: gene_family_R
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - r-base=4.3
+  - r-topgo
+  - r-rgraphviz
+  - r-ape
+  - r-phytools
+  - r-dplyr
+  - r-tidyr
+  - r-readr
+  - r-stringr
+  - r-upsetr
