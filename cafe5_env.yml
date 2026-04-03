@@ -1,0 +1,7 @@
+name: cafe5
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - cafe=5.1.0
