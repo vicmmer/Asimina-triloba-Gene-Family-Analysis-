@@ -16,24 +16,6 @@ The workflow integrates the following tools:
 
 ---
 
-# Installation
-
-Create the Conda environment containing all required software:
-
-```bash
-conda env create -f environment.yml
-conda activate gene_family_pipeline
-```
-
-This installs:
-
-- OrthoFinder  
-- InterProScan  
-- CAFE5  
-- treePL  
-- R and required packages (`topGO`, `ape`, `phytools`, `dplyr`, etc.)
-
----
 
 # Dataset Scope
 
