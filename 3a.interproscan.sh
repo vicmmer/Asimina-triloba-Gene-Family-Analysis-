@@ -5,7 +5,7 @@ set -e
 
 INPUT_DIR="interproscan_input"
 OUTPUT_DIR="interproscan_output"
-IPS_PATH="/home/vmartinez/my_interproscan/interproscan-5.75-106.0/interproscan.sh"
+IPS_PATH="/opt/interproscan/interproscan-5.75-106.0/interproscan.sh"
 
 JOBS=40   # number of parallel jobs
 CPU=1     # CPUs per InterProScan run
