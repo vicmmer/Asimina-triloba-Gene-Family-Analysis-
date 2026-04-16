@@ -61,9 +61,12 @@ scripts/0.download_accessions.sh
 |------|----------|------------|------|
 | *Annona cherimola* | `Annona_cherimola.fa` | CNCB / UMA proteins | 2023 |
 | *Annona montana* | `Annona_montana.fa` | CNCB–GWH | 2023 |
+| *Annona muricata* | `Annona_muricata.fa` | |  |
 | *Cinnamomum micranthum* | `Cinnamomum_micranthum.fa` | NCBI Datasets | 2019 |
 | *Lindera megaphylla* | `Lindera_megaphylla.fa` | CNCB–GWH | 2023 |
 | *Magnolia kwangsiensis* | `Magnolia_kwangsiensis.fa` | CNCB–GWH | 2025 |
+| *Asimina triloba* | `Asimina_triloba.fa` | own assembly | 2024? |
+| *Persea americana* | `` |  |  |
 
 The pipeline can easily be modified to include **additional species or alternative taxa** by editing:
 
