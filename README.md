@@ -297,7 +297,7 @@ SpeciesTree_ultrametric.txt
 ---
 
 ## 5. Gene Family Evolution Modeling
-
+“Is this gene family unusually expanded or contracted along a lineage compared to expectation under a birth–death model?
 ```
 cafe2.sh
 ```
@@ -334,7 +334,6 @@ SpeciesTree_treepl_dated_TEST.pdf
 ---
 
 ## 7. GO Enrichment Analysis
-“Is this gene family unusually expanded or contracted along a lineage compared to expectation under a birth–death model?
 
 ```
 7a.topgoprep.sh
