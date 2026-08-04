@@ -1,0 +1,27 @@
+Notes about Cafe and troubleshooting
+
+*when doing the rerun_scrcatch run, cafe kept failing bebacuse some orthogroups had huge size differentials! 
+Will keep that log and move it to /home/vmartinez/genefamily/rerun_scratchJuly/cafelog_ts 
+
+These are the families it mentioned to remove: 
+Families with largest size differentials:
+OG0000002: 621
+OG0000001: 324
+OG0000007: 317
+OG0000019: 268
+OG0000008: 227
+OG0000000: 221
+OG0000033: 213
+OG0000040: 187
+OG0000018: 184
+OG0000037: 168
+OG0000003: 159
+OG0000025: 157
+OG0000006: 148
+OG0000015: 126
+OG0000046: 121
+OG0000013: 121
+OG0000009: 119
+OG0000061: 116
+OG0000050: 114
+OG0000014: 106
