@@ -29,3 +29,12 @@ OG0000014: 106
 
 Thsoe were taken out so cafe could run, 
 I have in the automate scrip that i use TreePL and the 6c. plottree.R scripts to egnerate the dated tree. I remember now this is not what I ended up using last time and treepl was giving me a crazy estimate for the age, I ended up using MEGA to calibrate! 
+
+Some results: 
+| Question                                                |     Number |
+| ------------------------------------------------------- | ---------: |
+| Families analyzed by CAFE                               | **17,080** |
+| Significant gene families (anywhere in the tree)        |  **1,502** |
+| Families with an expansion on the *A. triloba* branch   |    **374** |
+| Significant **and** expanded on the *A. triloba* branch |     **70** |
+
